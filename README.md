@@ -120,7 +120,7 @@ This project follows a **Separation of Concerns** principle:
 
 ## 🔗 Submission Links
 - **Demo Video:** [Link to Demo Video]
-- **Live Deployment:** [Link to Deployed App]
+- **Live Deployment:** [https://salesflow-crm-wishwa-dilshan-7j832oj0y.vercel.app/](https://salesflow-crm-wishwa-dilshan-7j832oj0y.vercel.app/)
 
 ## ⚠️ Known Limitations
 - **Email Notifications:** Automatic lead assignment emails are not currently implemented.
