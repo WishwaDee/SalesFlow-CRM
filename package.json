@@ -1,0 +1,15 @@
+{
+  "name": "crm-wishwa-dilshan",
+  "version": "1.0.0",
+  "description": "Full-Stack CRM Lead Management System",
+  "scripts": {
+    "install-all": "npm install && cd server && npm install && cd ../client && npm install",
+    "server": "cd server && npm run server",
+    "client": "cd client && npm run dev",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "seed": "cd server && node seeder.js"
+  },
+  "dependencies": {
+    "concurrently": "^8.2.1"
+  }
+}
