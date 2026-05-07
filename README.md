@@ -4,73 +4,84 @@ A professional, high-performance Customer Relationship Management (CRM) system d
 
 ---
 
+## 🔐 Test Login Credentials
+Use these to log in and explore all features:
+- **Email:** `admin@example.com`
+- **Password:** `password123`
+
+---
+
 ## 📑 Table of Contents
 - [Project Overview](#-project-overview)
 - [Tech Stack](#%EF%B8%8F-tech-stack)
 - [Key Features](#-key-features)
 - [Getting Started](#-getting-started)
 - [Environment Variables](#-environment-variables)
-- [Test Credentials](#-test-credentials)
 - [Project Structure](#-project-structure)
 - [Reflection & Architecture](#-reflection--architecture)
+- [Submission Links](#-submission-links)
 - [Known Limitations](#-known-limitations)
 
 ---
 
 ## 🎯 Project Overview
-SalesFlow CRM is built to help sales teams move prospects through a structured pipeline. It provides a centralized hub to manage contact information, track deal values, and collaborate via internal notes. The goal of this project was to demonstrate full-stack proficiency, secure authentication, and product-focused engineering.
+SalesFlow CRM is a centralized hub built to help sales teams manage contact information, track deal values, and move prospects through a structured pipeline. This project was developed as part of a full-stack developer assessment, focusing on secure authentication, efficient CRUD operations, and a clean, responsive UI.
 
 ## 🛠️ Tech Stack
-- **Frontend:** React 18 (Vite), Tailwind CSS, Lucide Icons, React Router 7.
+- **Frontend:** React 19 (Vite), Tailwind CSS 4, Lucide Icons, React Router 7.
 - **Backend:** Node.js, Express.js.
 - **Database:** MongoDB (Mongoose ODM).
 - **Authentication:** JSON Web Tokens (JWT) & Bcrypt.js hashing.
-- **Communication:** Axios with interceptors for automatic token handling.
+- **State Management:** React Context API for Global Auth.
 
 ## ✨ Key Features
-- **Secure Authentication:** Complete login flow with protected routes and persistent sessions.
-- **Lead CRUD:** Full lifecycle management (Create, Read, Update, Delete) for sales leads.
-- **Interactive Dashboard:** Real-time KPIs including Total Leads, Conversion rates, and Deal Values.
-- **Visual Sales Pipeline:** Track leads through stages: *New, Contacted, Qualified, Proposal Sent, Won, Lost*.
-- **Collaboration Tools:** A timestamped internal notes system for every lead.
-- **Advanced Search & Filtering:** Instant multi-field search (Name/Email/Company) and status filtering.
-- **Responsive Design:** A mobile-friendly, professional interface.
+- **Secure Authentication:** JWT-based login flow with protected routes.
+- **Lead Lifecycle Management:** Full CRUD operations for sales leads.
+- **Interactive Dashboard:** Real-time KPIs (Total Leads, New/Qualified/Won/Lost counts).
+- **Sales Pipeline:** Track leads through customizable stages.
+- **Lead Notes:** Timestamped internal collaboration system.
+- **Search & Filtering:** Multi-field search (Name/Email/Company) and status-based filtering.
+- **Responsive Design:** Fully mobile-friendly interface.
 
 ## 🏁 Getting Started
 
 ### Prerequisites
-- **Node.js:** v16 or higher.
-- **MongoDB:** A local instance running on `mongodb://localhost:27017/crm_db`.
+- **Node.js:** v18 or higher.
+- **MongoDB:** A local instance running (default: `mongodb://localhost:27017/crm_db`).
 
-### Installation
-1. **Clone the Repo:**
+### Installation & Setup
+
+1. **Clone the Repository:**
    ```bash
    git clone <your-repo-url>
    cd CRM_Wishwa_Dilshan
    ```
 
-2. **Install Dependencies:**
-   I have included a root-level script to install all frontend and backend dependencies at once:
+2. **Install All Dependencies:**
+   Run this from the root directory to install packages for the root, client, and server:
    ```bash
    npm run install-all
    ```
 
-3. **Seed the Database:**
-   Initialize the database with the required admin user and sample lead data:
+3. **Configure Environment Variables:**
+   Create a `.env` file in the `server/` directory (see [Environment Variables](#-environment-variables)).
+
+4. **Seed the Database:**
+   Initialize the database with the admin user and sample leads:
    ```bash
    npm run seed
    ```
 
-4. **Launch the App:**
-   Run both the frontend and backend concurrently:
+5. **Start Development Servers:**
+   Launch both the frontend and backend concurrently:
    ```bash
    npm run dev
    ```
-   - **Frontend:** `http://localhost:5173`
-   - **Backend:** `http://localhost:5000`
+   - **Frontend:** [http://localhost:5173](http://localhost:5173)
+   - **Backend:** [http://localhost:5000](http://localhost:5000)
 
 ## 🔑 Environment Variables
-The application uses a `.env` file in the `server/` directory:
+The application requires the following variables in `server/.env`:
 ```env
 PORT=5000
 MONGODB_URI=mongodb://localhost:27017/crm_db
@@ -78,41 +89,42 @@ JWT_SECRET=your_secure_secret_here
 NODE_ENV=development
 ```
 
-## 🔐 Test Credentials
-Use these to log in and test all features:
-- **Email:** `admin@example.com`
-- **Password:** `password123`
-
 ## 📁 Project Structure
 ```text
-├── client/                 # React Frontend
+├── client/                 # React Frontend (Vite)
 │   ├── src/
-│   │   ├── components/     # Reusable UI (Modals, Cards)
-│   │   ├── context/        # Auth State Management
-│   │   ├── pages/          # Main Views (Dashboard, Leads)
-│   │   └── services/       # API configuration (Axios)
-├── server/                 # Node/Express Backend
+│   │   ├── components/     # Modals, Lead Cards, Layout
+│   │   ├── context/        # Auth Context & State
+│   │   ├── pages/          # Dashboard, Lead List, Login
+│   │   └── services/       # Axios API Service
+├── server/                 # Express Backend
 │   ├── src/
-│   │   ├── config/         # DB & Token config
-│   │   ├── controllers/    # Business Logic
-│   │   ├── models/         # MongoDB Schemas
-│   │   ├── routes/         # API Endpoints
-│   │   └── middleware/     # Auth & Protection
-└── package.json            # Orchestration scripts
+│   │   ├── config/         # DB & JWT Helpers
+│   │   ├── controllers/    # Lead & User Logic
+│   │   ├── models/         # Mongoose Schemas
+│   │   ├── routes/         # Express API Routes
+│   │   └── middleware/     # Auth Protection
+└── package.json            # Root scripts for orchestration
 ```
 
 ## 🧠 Reflection & Architecture
-This project implements a **Modular Monolith** architecture. 
-- **Backend:** By separating logic into controllers and routes, we ensure the API is easy to test and extend. We use Mongoose middlewares (pre-save) to handle security concerns like password hashing automatically.
-- **Frontend:** We leverage React Context for global authentication state, ensuring a seamless user experience. Tailwind CSS was chosen for its utility-first approach, allowing for a highly customized and professional design without bloated CSS files.
+### Architecture
+This project follows a **Separation of Concerns** principle:
+- **Modular Backend:** Routes are decoupled from business logic (controllers), making the API scalable and maintainable.
+- **Component-Driven Frontend:** UI is broken down into reusable components, utilizing Tailwind CSS for rapid, consistent styling.
+- **Security First:** Passwords are never stored in plain text (Bcrypt), and sensitive routes are guarded by JWT middleware.
 
-**Challenges Overcome:**
-- Designing a robust filtering system that maintains performance as the lead count grows.
-- Ensuring a smooth "Edit Mode" experience that provides immediate visual feedback.
+### Challenges & Solutions
+- **Dynamic Dashboard:** Aggregating MongoDB data efficiently was achieved using optimized queries to provide real-time KPI updates.
+- **State Persistence:** Implemented robust auth persistence to ensure a smooth user experience across page refreshes.
+
+## 🔗 Submission Links
+- **Demo Video:** [Link to Demo Video]
+- **Live Deployment:** [Link to Deployed App]
 
 ## ⚠️ Known Limitations
-- **File Uploads:** Currently supports text-based notes only (no document attachments).
-- **Multi-user Roles:** Designed for a single "Admin" salesperson role for this assessment.
+- **Email Notifications:** Automatic lead assignment emails are not currently implemented.
+- **Advanced Permissions:** All logged-in users have administrative access for this version.
 
 ---
 **Developed by Wishwa Dilshan**  
